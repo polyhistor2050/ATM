@@ -1,8 +1,10 @@
 #include <stdio.h> 
+#include <string.h>
 
 int main() {
     int pin;
     int choice;
+    int transferChoice;
     long amount = 300000;
     long withdraw;
     long deposit;
@@ -10,7 +12,9 @@ int main() {
     long transferNo;
     long withdrawAmount;
     long customAmount;
+    char phoneNo[10];
     char anotherTransaction;
+    
     
     
     printf("Type your secrete pin number: ");
@@ -25,7 +29,7 @@ int main() {
             printf("3. Cash Deposition\n");
             printf("4. Transfer\n");
             printf("5. Exit\n");
-            printf("*******?*********?*\n\n");
+            printf(">>>>>>>>>>>>>>>>>\n\n");
             printf("Please proceed with your choice: ");
             scanf("%d", &choice);
             
@@ -51,7 +55,7 @@ int main() {
                         if (withdrawAmount == 10000) {
                             amount = amount - 10000;
                             printf("\n Withdraw successful\n");
-                            printf("Your account balance is: %lu \n", amount); 
+                            printf("Your account balance is: %lu/Tzs\n", amount); 
                         } else {
                             printf("\n Insufficient balance\n");
                         }
@@ -60,7 +64,7 @@ int main() {
                         if (withdrawAmount == 50000) {
                             amount = amount - 50000;
                             printf("\n Withdraw successful\n");
-                            printf("Your account balance is: %lu \n", amount); 
+                            printf("Your account balance is: %lu/Tzs\n", amount); 
                         } else {
                             printf("\n Insufficient balance\n");
                         }
@@ -69,7 +73,7 @@ int main() {
                         if (withdrawAmount == 100000) {
                             amount = amount - 100000;
                             printf("\n Withdraw successful\n");
-                            printf("Your account balance is: %lu \n", amount); 
+                            printf("Your account balance is: %lu/Tzs\n", amount); 
                         } else {
                             printf("\n Insufficient balance\n");
                         }
@@ -78,7 +82,7 @@ int main() {
                         if (withdrawAmount == 200000) {
                             amount = amount - 200000;
                             printf("\n Withdraw successful\n");
-                            printf("Your account balance is: %lu \n", amount); 
+                            printf("Your account balance is: %lu/Tzs\n", amount); 
                         } else {
                             printf("\n Insufficient balance\n");
                         }
@@ -87,7 +91,7 @@ int main() {
                         if (withdrawAmount == 300000) {
                             amount = amount - 300000;
                             printf("\n Withdraw successful\n");
-                            printf("Your account balance is: %lu \n", amount); 
+                            printf("Your account balance is: %lu/Tzs\n", amount); 
                         } else {
                             printf("\n Withdrawal limit exceeded (300,000)\n");
                         }
@@ -98,7 +102,7 @@ int main() {
                         if (customAmount <= amount) {
                             amount = amount - customAmount;
                             printf("\n Withdraw successful\n");
-                            printf("Your account balance is: %lu \n", amount); 
+                            printf("Your account balance is: %lu/Tzs\n", amount); 
                         } else {
                             printf("\n Insufficient balance\n");
                         }
@@ -111,23 +115,62 @@ int main() {
                     printf("\n Insert the amount to be deposited: ");
                     scanf("%lu", &deposit);
                     amount = amount + deposit;
-                    printf("Your account balance is: %lu \n", amount);
+                    printf("Your account balance is: %lu/Tsh \n", amount);
                     break;
                 
                 case 4:
-                    printf("Enter the account to transfer: ");
-                    scanf("%lu", &transferNo);
-                    printf("\n Insert the amount to transfer to account %lu: ", transferNo);
-                    scanf("%lu", &transfer);
+                    printf("Choose transfer option:\n");
+                    printf("1. Transfer to bank account\n");
+                    printf("2. Transfer to phone number\n");
+                    printf(": ");
+                    scanf("%d", &transferChoice);
+                    
 
-                    if (transfer > amount) {
-                        printf("\n You have insufficient balance for the transfer \n");
-                    }else {
-                        amount = amount - transfer;
-                        printf("\n\n Transfer successfull");
-                        printf("\n The current balance is %lu \n", amount);
+                    if (transferChoice == 1) {
+                        printf("Enter the account to transfer (max 11 digits) \n");
+                        printf(": ");
+                        scanf("%lu", &transferNo);
+
+                        if (transferNo >= 10000000000 && transferNo <= 99999999999) {
+                            printf("\n Insert the amount to transfer to account number: %lu: ", transferNo);
+                            scanf("%lu", &transfer);
+                            
+
+                            if (transfer > amount) {
+                                printf("\n You have insufficient balance for the transfer \n");
+                            }else {
+                                amount = amount - transfer;
+                                printf("\n\n Transfer successfull");
+                                printf("\n The current balance is %lu/Tzs \n", amount);
+                                break;
+                            }
+                        } else {
+                            printf("\n Invalid bank account number.\n");
+                            break;
+                        }
+                    }else if(transferChoice == 2){
+                        printf("Enter the phone number to transfer (max 10 digits) \n");
+                        printf("+255: ");
+                        scanf("%s", &phoneNo);
+                        
+                        if (strlen(phoneNo) == 9) {
+                            printf("\n Insert the amount to transfer to phone number: +255%s: ", phoneNo);
+                            scanf("%lu", &transfer);
+
+
+                            if (transfer > amount) {
+                                printf("\n You have insufficient balance for the transfer \n");
+                            }else {
+                                amount = amount - transfer;
+                                printf("\n\n Transfer successfull");
+                                printf("\n The current balance is %lu/Tzs \n", amount);
+                                break;
+                            }
+                        } else {
+                            printf("\n Invalid phone number.\n");
+                            break;
+                        }
                     }
-                    break;
 
                 case 5:
                     printf("\n Exiting the ATM service. Thank you!\n");
@@ -140,6 +183,12 @@ int main() {
 
             printf("\n Do you want to make another transaction? (y/n): ");
             scanf(" %c", &anotherTransaction);
+            if(anotherTransaction == 'n' || anotherTransaction == 'N') {
+                printf("Exiting the ATM service. Thank you!\n");
+                return 0;
+            }else if(anotherTransaction != 'y' && anotherTransaction != 'Y' && anotherTransaction != 'n' && anotherTransaction != 'N') {
+                printf("Invalid option. Exiting the ATM service\n\n");
+            }
         
         } while (anotherTransaction == 'y' || anotherTransaction == 'Y');
         
