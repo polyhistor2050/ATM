@@ -180,15 +180,21 @@ int main() {
                     printf("\n You have made an invalid choice \n");
 
             }
-
+            
+            
             printf("\n Do you want to make another transaction? (y/n): ");
             scanf(" %c", &anotherTransaction);
             if(anotherTransaction == 'n' || anotherTransaction == 'N') {
                 printf("Exiting the ATM service. Thank you!\n");
                 return 0;
-            }else if(anotherTransaction != 'y' && anotherTransaction != 'Y' && anotherTransaction != 'n' && anotherTransaction != 'N') {
+            }else if(
+                anotherTransaction != 'y' &&
+                anotherTransaction != 'Y' &&
+                anotherTransaction != 'n' &&
+                anotherTransaction != 'N') {
                 printf("Invalid option. Exiting the ATM service\n\n");
             }
+            
         
         } while (anotherTransaction == 'y' || anotherTransaction == 'Y');
         
